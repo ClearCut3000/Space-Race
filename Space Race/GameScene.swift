@@ -125,9 +125,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     for node in children {
       if node.name == "enemy" && node.position.x < 1 {
         let dismiss = SKEmitterNode(fileNamed: "dismiss")!
+        dismiss.name = "dismiss"
         dismiss.position = node.position
         addChild(dismiss)
         node.removeFromParent()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+          dismiss.removeFromParent()
+        }
         if !isGameOver {
           score += 1
         } else if isGameOver { score = 0 }
